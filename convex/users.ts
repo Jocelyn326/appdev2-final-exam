@@ -31,6 +31,7 @@ export const login = mutation({
 
 export const register = mutation({
     args: {
+        fullname: v.string(),
         username: v.string(),
         password: v.string()
     },
@@ -45,7 +46,8 @@ export const register = mutation({
 
         const hashedPassword = bcrypt.hashSync(args.password, 10);
 
-        const userId = ctx.db.insert("users", {
+        const userId = await ctx.db.insert("users", {
+            fullname: args.fullname,
             username: args.username,
             password: hashedPassword
         });
